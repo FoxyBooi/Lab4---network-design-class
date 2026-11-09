@@ -1,4 +1,4 @@
 # Lab4-network-design-class
-Open directory in terminal
-Deploy: sudo clab deploy -t lab.clab.yml
-Destroy: sudo clab destroy -t lab.clab.yml
+1. Open directory in terminal
+2. Deploy: sudo clab deploy -t lab.clab.yml
+3. Destroy: sudo clab destroy -t lab.clab.yml
