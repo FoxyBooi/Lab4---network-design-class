@@ -1,0 +1,251 @@
+{
+  "name": "iptables-firewall-lab",
+  "type": "clab",
+  "clab": {
+    "config": {
+      "prefix": "clab",
+      "mgmt": {
+        "network": "clab",
+        "bridge": "br-64358d4734d8",
+        "ipv4-subnet": "172.20.20.0/24",
+        "ipv4-gw": "172.20.20.1",
+        "ipv6-subnet": "3fff:172:20:20::/64",
+        "ipv6-gw": "3fff:172:20:20::1",
+        "external-access": true,
+        "ipam": {
+          "provider": "containerlab"
+        }
+      }
+    }
+  },
+  "ssh-pub-keys": [],
+  "nodes": {
+    "dmz-server": {
+      "index": "0",
+      "shortname": "dmz-server",
+      "longname": "clab-iptables-firewall-lab-dmz-server",
+      "fqdn": "dmz-server.iptables-firewall-lab.io",
+      "group": "",
+      "labdir": "/run/media/foxybooi/EBFF-7F73/School/COMP 2006 - Network Design/labs/Lab4/clab-iptables-firewall-lab/dmz-server",
+      "kind": "linux",
+      "image": "nginx:alpine",
+      "mgmt-net": "clab",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.3",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::3",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-64358d4734d8",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/run/media/foxybooi/EBFF-7F73/School/COMP 2006 - Network Design/labs/Lab4/clab-iptables-firewall-lab/dmz-server",
+        "clab-node-longname": "clab-iptables-firewall-lab-dmz-server",
+        "clab-node-name": "dmz-server",
+        "clab-node-type": "",
+        "clab-owner": "foxybooi",
+        "clab-topo-file": "/run/media/foxybooi/EBFF-7F73/School/COMP 2006 - Network Design/labs/Lab4/lab.clab.yml",
+        "containerlab": "iptables-firewall-lab"
+      },
+      "port-bindings": [
+        {
+          "host-ip": "",
+          "host-port": 0,
+          "port": 80,
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "lan-client": {
+      "index": "1",
+      "shortname": "lan-client",
+      "longname": "clab-iptables-firewall-lab-lan-client",
+      "fqdn": "lan-client.iptables-firewall-lab.io",
+      "group": "",
+      "labdir": "/run/media/foxybooi/EBFF-7F73/School/COMP 2006 - Network Design/labs/Lab4/clab-iptables-firewall-lab/lan-client",
+      "kind": "linux",
+      "image": "alpine:latest",
+      "mgmt-net": "clab",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.4",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::4",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-64358d4734d8",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/run/media/foxybooi/EBFF-7F73/School/COMP 2006 - Network Design/labs/Lab4/clab-iptables-firewall-lab/lan-client",
+        "clab-node-longname": "clab-iptables-firewall-lab-lan-client",
+        "clab-node-name": "lan-client",
+        "clab-node-type": "",
+        "clab-owner": "foxybooi",
+        "clab-topo-file": "/run/media/foxybooi/EBFF-7F73/School/COMP 2006 - Network Design/labs/Lab4/lab.clab.yml",
+        "containerlab": "iptables-firewall-lab"
+      },
+      "port-bindings": [
+      ]
+    },
+    "router": {
+      "index": "2",
+      "shortname": "router",
+      "longname": "clab-iptables-firewall-lab-router",
+      "fqdn": "router.iptables-firewall-lab.io",
+      "group": "",
+      "labdir": "/run/media/foxybooi/EBFF-7F73/School/COMP 2006 - Network Design/labs/Lab4/clab-iptables-firewall-lab/router",
+      "kind": "linux",
+      "image": "alpine:latest",
+      "mgmt-net": "clab",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.5",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::5",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-64358d4734d8",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/run/media/foxybooi/EBFF-7F73/School/COMP 2006 - Network Design/labs/Lab4/clab-iptables-firewall-lab/router",
+        "clab-node-longname": "clab-iptables-firewall-lab-router",
+        "clab-node-name": "router",
+        "clab-node-type": "",
+        "clab-owner": "foxybooi",
+        "clab-topo-file": "/run/media/foxybooi/EBFF-7F73/School/COMP 2006 - Network Design/labs/Lab4/lab.clab.yml",
+        "containerlab": "iptables-firewall-lab"
+      },
+      "port-bindings": [
+      ]
+    },
+    "wan-attacker": {
+      "index": "3",
+      "shortname": "wan-attacker",
+      "longname": "clab-iptables-firewall-lab-wan-attacker",
+      "fqdn": "wan-attacker.iptables-firewall-lab.io",
+      "group": "",
+      "labdir": "/run/media/foxybooi/EBFF-7F73/School/COMP 2006 - Network Design/labs/Lab4/clab-iptables-firewall-lab/wan-attacker",
+      "kind": "linux",
+      "image": "alpine:latest",
+      "mgmt-net": "clab",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.6",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::6",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-64358d4734d8",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/run/media/foxybooi/EBFF-7F73/School/COMP 2006 - Network Design/labs/Lab4/clab-iptables-firewall-lab/wan-attacker",
+        "clab-node-longname": "clab-iptables-firewall-lab-wan-attacker",
+        "clab-node-name": "wan-attacker",
+        "clab-node-type": "",
+        "clab-owner": "foxybooi",
+        "clab-topo-file": "/run/media/foxybooi/EBFF-7F73/School/COMP 2006 - Network Design/labs/Lab4/lab.clab.yml",
+        "containerlab": "iptables-firewall-lab"
+      },
+      "port-bindings": [
+      ]
+    },
+    "wan-client": {
+      "index": "4",
+      "shortname": "wan-client",
+      "longname": "clab-iptables-firewall-lab-wan-client",
+      "fqdn": "wan-client.iptables-firewall-lab.io",
+      "group": "",
+      "labdir": "/run/media/foxybooi/EBFF-7F73/School/COMP 2006 - Network Design/labs/Lab4/clab-iptables-firewall-lab/wan-client",
+      "kind": "linux",
+      "image": "alpine:latest",
+      "mgmt-net": "clab",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.2",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::2",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-64358d4734d8",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/run/media/foxybooi/EBFF-7F73/School/COMP 2006 - Network Design/labs/Lab4/clab-iptables-firewall-lab/wan-client",
+        "clab-node-longname": "clab-iptables-firewall-lab-wan-client",
+        "clab-node-name": "wan-client",
+        "clab-node-type": "",
+        "clab-owner": "foxybooi",
+        "clab-topo-file": "/run/media/foxybooi/EBFF-7F73/School/COMP 2006 - Network Design/labs/Lab4/lab.clab.yml",
+        "containerlab": "iptables-firewall-lab"
+      },
+      "port-bindings": [
+      ]
+    }
+  },
+  "links": [
+    {
+      "endpoints": {
+        "a": {
+          "node": "lan-client",
+          "interface": "eth1",
+          "mac": "aa:c1:ab:6b:fb:d1",
+          "peer": "z"
+        },
+        "z": {
+          "node": "router",
+          "interface": "eth1",
+          "mac": "aa:c1:ab:53:67:39",
+          "peer": "a"
+        }
+      }
+    },
+    {
+      "endpoints": {
+        "a": {
+          "node": "dmz-server",
+          "interface": "eth1",
+          "mac": "aa:c1:ab:52:96:31",
+          "peer": "z"
+        },
+        "z": {
+          "node": "router",
+          "interface": "eth2",
+          "mac": "aa:c1:ab:7d:e1:d5",
+          "peer": "a"
+        }
+      }
+    },
+    {
+      "endpoints": {
+        "a": {
+          "node": "wan-client",
+          "interface": "eth1",
+          "mac": "aa:c1:ab:35:1c:c8",
+          "peer": "z"
+        },
+        "z": {
+          "node": "router",
+          "interface": "eth3",
+          "mac": "aa:c1:ab:46:61:b2",
+          "peer": "a"
+        }
+      }
+    },
+    {
+      "endpoints": {
+        "a": {
+          "node": "wan-attacker",
+          "interface": "eth1",
+          "mac": "aa:c1:ab:21:cc:9e",
+          "peer": "z"
+        },
+        "z": {
+          "node": "router",
+          "interface": "eth4",
+          "mac": "aa:c1:ab:94:de:49",
+          "peer": "a"
+        }
+      }
+    }
+  ]
+}

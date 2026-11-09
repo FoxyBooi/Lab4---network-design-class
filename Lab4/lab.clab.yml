@@ -1,0 +1,79 @@
+name: iptables-firewall-lab
+
+topology:
+  nodes:
+    # Alpine Linux Firewall Router
+    router:
+      kind: linux
+      image: alpine:latest
+      exec:
+        - ip link set eth1 up
+        - ip link set eth2 up
+        - ip link set eth3 up
+        - ip link set eth4 up
+        - apk add --no-cache iptables
+        - sysctl -w net.ipv4.ip_forward=1
+        - ip addr replace 10.1.1.1/24 dev eth1
+        - ip addr replace 192.168.10.1/24 dev eth2
+        - ip addr replace 172.16.1.1/24 dev eth3
+        - ip addr replace 172.16.1.2/24 dev eth4
+        #IP tables
+        - iptables -P FORWARD DROP
+        - iptables -A FORWARD -s 172.16.1.200 -j DROP
+        - iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+        - iptables -A FORWARD -i eth1 -o eth2 -s 10.1.1.0/24 -d 192.168.10.0/24 -j ACCEPT
+        - iptables -A FORWARD -i eth1 -o eth3 -s 10.1.1.0/24 -j ACCEPT
+        - iptables -A FORWARD -i eth3 -o eth2 -d 192.168.10.10 -p tcp --dport 80 -j ACCEPT
+        - iptables -A FORWARD -i eth3 -o eth2 -d 192.168.10.10 -p tcp --dport 443 -j ACCEPT
+
+    # LAN Client
+    lan-client:
+      kind: linux
+      image: alpine:latest
+      exec:
+        - ip link set eth1 up
+        - apk add --no-cache curl netcat-openbsd
+        - ip addr add 10.1.1.10/24 dev eth1
+        - ip route replace default via 10.1.1.1 dev eth1
+
+    #DMZ Web Server
+    dmz-server:
+      kind: linux
+      image: nginx:alpine
+      exec:
+        - ip link set eth1 up
+        - ip addr add 192.168.10.10/24 dev eth1
+        - ip route replace default via 192.168.10.1 dev eth1
+
+    # WAN Client
+    wan-client:
+      kind: linux
+      image: alpine:latest
+      exec:
+        - ip link set eth1 up
+        - apk add --no-cache curl netcat-openbsd
+        - ip addr add 172.16.1.100/24 dev eth1
+        - ip route replace default via 172.16.1.1 dev eth1
+
+    # WAN Attacker / Blacklisted Host
+    wan-attacker:
+      kind: linux
+      image: alpine:latest
+      exec:
+        - ip link set eth1 up
+        - apk add --no-cache curl netcat-openbsd
+        - ip addr add 172.16.1.200/24 dev eth1
+        - ip route replace default via 172.16.1.2 dev eth1
+
+  links:
+    # LAN Client (10.1.1.10)
+    - endpoints: ["lan-client:eth1", "router:eth1"]
+
+    # DMZ Web Server (192.168.10.10)
+    - endpoints: ["dmz-server:eth1", "router:eth2"]
+
+    # External WAN Client (172.16.1.1)
+    - endpoints: ["wan-client:eth1", "router:eth3"]
+
+    # WAN Attacker (172.16.1.200)
+    - endpoints: ["wan-attacker:eth1", "router:eth4"]
